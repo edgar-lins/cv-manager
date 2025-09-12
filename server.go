@@ -10,6 +10,7 @@ import (
 	"github.com/99designs/gqlgen/graphql/handler/transport"
 	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/edgar-lins/cv-manager/config"
+	"github.com/edgar-lins/cv-manager/config/db"
 	"github.com/edgar-lins/cv-manager/generated"
 	"github.com/edgar-lins/cv-manager/resolvers"
 	"github.com/go-chi/chi"
@@ -24,6 +25,11 @@ func main() {
 		port = config.DEFAULT_PORT
 	}
 
+	db, err := db.New(env.DBName)
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	router := chi.NewRouter()
 	router.Use(
 		cors.Handler(cors.Options{
@@ -33,7 +39,7 @@ func main() {
 		}),
 	)
 
-	srv := handler.New(generated.NewExecutableSchema(generated.Config{Resolvers: &resolvers.Resolver{}}))
+	srv := handler.New(generated.NewExecutableSchema(generated.Config{Resolvers: &resolvers.Resolver{DB: db}}))
 
 	srv.AddTransport(transport.Options{})
 	srv.AddTransport(transport.GET{})
@@ -51,4 +57,7 @@ func main() {
 
 	log.Printf("connect to http://localhost:%s/ for GraphQL playground", port)
 	log.Fatal(http.ListenAndServe(":"+port, router))
+	if err := http.ListenAndServe(":"+port, router); err != nil {
+		log.Fatalf("failed to start server: %v", err)
+	}
 }
