@@ -33,7 +33,7 @@ Siga os passos abaixo para configurar e executar o projeto localmente.
 1.  **Clone o repositório:**
 
 ```bash
-git clone https://github.com/edgar-lins/cv-manager.git
+git clone https://github.com/nome_do_usuario/cv-manager.git
 cd cv-manager
 ```
 
