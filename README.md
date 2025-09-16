@@ -1,38 +1,81 @@
-# Gerenciador de Currículos
+# Gerenciador de Currículos (CV Manager)
 
-O Gerenciador de Currículos é um projeto desenvolvido para ajudar usuários a organizar e gerenciar seus currículos de forma eficiente. Com esta ferramenta, você pode criar, atualizar e exportar seu currículo com facilidade.
+O Gerenciador de Currículos é um backend de API GraphQL desenvolvido em Go para gerenciar informações de currículos de forma estruturada e eficiente.
 
-## Funcionalidades
+## ✨ Funcionalidades
 
-- Crie e edite seções do currículo (educação, experiência, habilidades, etc.)
-- Exporte seu currículo em vários formatos (PDF, DOCX, etc.)
-- Interface amigável e intuitiva
-- Persistência de dados
+- **API GraphQL**: Interface moderna e flexível para manipulação dos dados.
+- **Operações CRUD para Informações Básicas**:
+  - `createBasicInfo`: Cria um novo registro de informações básicas.
+  - `basicInfos`: Lista todos os registros.
+  - _(Planejado)_: Atualização, deleção e busca por ID.
+- **Persistência de Dados**: Utiliza MongoDB para armazenar as informações.
 
-## Como começar
+## 🛠️ Tecnologias Utilizadas
 
-1. **Clone o repositório:**
+- **Linguagem**: Go
+- **API**: GraphQL
+- **Framework GraphQL**: gqlgen
+- **Banco de Dados**: MongoDB
+- **Roteador HTTP**: Chi
 
-   ```bash
-   git clone https://github.com/yourusername/cv-manager.git
-   cd cv-manager
-   ```
+## 🚀 Como Começar
 
-2. **Instale as dependências:**
+Siga os passos abaixo para configurar e executar o projeto localmente.
 
-   ```bash
-   npm install
-   ```
+### Pré-requisitos
 
-3. **Execute a aplicação:**
-   ```bash
-   npm start
-   ```
+- Go (versão 1.23 ou superior)
+- MongoDB rodando em uma instância local ou remota.
 
-## Uso
+### Configuração
 
-- Siga as instruções na tela para adicionar ou editar as informações do seu currículo.
-- Exporte seu currículo utilizando as opções de exportação disponíveis.
+1.  **Clone o repositório:**
+
+```bash
+git clone https://github.com/edgar-lins/cv-manager.git
+cd cv-manager
+```
+
+2.  **Configure as variáveis de ambiente:**
+
+    Crie um arquivo `.env` na raiz do projeto (este arquivo não deve ser versionado).
+
+    ```env
+    # Porta para o servidor HTTP
+    PORT=8080
+
+    # URL de conexão do MongoDB
+    DB_URL=mongodb://localhost:27017
+
+    # Nome do banco de dados
+    DB_NAME=cv_manager
+    ```
+
+3.  **Instale as dependências:**
+
+```bash
+go mod tidy
+```
+
+4.  **(Opcional) Gere o código GraphQL:**
+
+    Se houver alterações nos arquivos de schema (`.graphqls`), execute o comando abaixo para atualizar o código gerado pelo `gqlgen`.
+
+```bash
+go run github.com/99designs/gqlgen generate
+```
+
+5.  **Execute a aplicação:**
+
+    ```bash
+    go run server.go
+    ```
+
+6.  **Acesse o Playground:**
+
+    A aplicação estará rodando e o GraphQL Playground estará acessível em:
+    http://localhost:8080/
 
 ## Créditos
 
